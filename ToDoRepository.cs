@@ -5,7 +5,7 @@ using todo_list.Dto;
 
 namespace todo_list
 {
-    public class ToDoRepository
+    public class ToDoRepository : IToDoRepository
     {
         // публичные функции репозитория
         public ToDoDto[] GetAll() {

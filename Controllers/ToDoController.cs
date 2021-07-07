@@ -13,27 +13,32 @@ namespace todo_list.Controllers
     [ApiController]
     public class ToDoController : ControllerBase
     {
-        private ToDoRepository repository = new ToDoRepository();
+        private IToDoRepository _repository;
+
+        public ToDoController( IToDoRepository repository )
+        {
+            _repository = repository;
+        }
 
         // GET: api/<ToDoController>
-        [HttpGet]
+        [ HttpGet]
         public IEnumerable<ToDoDto> Get()
         {
-            return repository.GetAll();
+            return _repository.GetAll();
         }
 
         // POST api/<ToDoController>
         [HttpPost]
         public int Post([FromBody] ToDoDto dto)
         {
-            return repository.Add(dto);
+            return _repository.Add(dto);
         }
 
         // PUT api/<ToDoController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] ToDoDto dto)
         {
-            repository.Update(id, dto);
+            _repository.Update(id, dto);
         }
     }
 }
