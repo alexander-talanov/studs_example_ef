@@ -10,10 +10,12 @@ namespace todo_list
     public class ToDoRepository : IToDoRepository
     {
         private ToDoDbContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public ToDoRepository( ToDoDbContext context )
+        public ToDoRepository( ToDoDbContext context, IUnitOfWork unitOfWork )
         {
             _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public ToDoDto[] GetAll()
@@ -25,12 +27,23 @@ namespace todo_list
 
         public int Add( ToDoDto toDoDto )
         {
-            throw new NotImplementedException();
+            ToDoEntity newEntity = new ToDoEntity
+            {
+                Name = toDoDto.Name,
+                Done = toDoDto.Done
+            };
+            _context.Set<ToDoEntity>().Add( newEntity );
+            _unitOfWork.Commit();
+
+            return newEntity.Id;
         }
 
         public void Update( int id, ToDoDto toDoDto )
         {
-            throw new NotImplementedException();
+            ToDoEntity entity = _context.Set<ToDoEntity>().FirstOrDefault( item => item.Id == id );
+            entity.Name = toDoDto.Name;
+            entity.Done = toDoDto.Done;
+            _unitOfWork.Commit();
         }
     }
 }

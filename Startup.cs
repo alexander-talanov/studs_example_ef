@@ -30,6 +30,7 @@ namespace todo_list
             services.AddScoped<IToDoRepository, ToDoRepository>();
             const string connectionString = "Data Source=DEVSQL;Initial Catalog=talanov_todo_test;Pooling=true;Integrated Security=SSPI";
             services.AddDbContext<ToDoDbContext>( opts => opts.UseSqlServer( connectionString ) );
+            services.AddScoped<IUnitOfWork>( sp => sp.GetService<ToDoDbContext>() );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
