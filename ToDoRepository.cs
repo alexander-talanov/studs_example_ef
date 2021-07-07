@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using todo_list.DbInfrastructure;
-using todo_list.Dto;
 using todo_list.Entities;
 
 namespace todo_list
@@ -10,40 +7,25 @@ namespace todo_list
     public class ToDoRepository : IToDoRepository
     {
         private ToDoDbContext _context;
-        private IUnitOfWork _unitOfWork;
 
-        public ToDoRepository( ToDoDbContext context, IUnitOfWork unitOfWork )
+        public ToDoRepository( ToDoDbContext context )
         {
             _context = context;
-            _unitOfWork = unitOfWork;
         }
 
-        public ToDoDto[] GetAll()
+        public ToDoEntity[] GetAll()
         {
-            return _context.Set<ToDoEntity>().ToList()
-                .ConvertAll( x => new ToDoDto { Id = x.Id, Name = x.Name, Done = x.Done } )
-                .ToArray();
+            return _context.Set<ToDoEntity>().ToArray();
         }
 
-        public int Add( ToDoDto toDoDto )
+        public ToDoEntity GetById( int id )
         {
-            ToDoEntity newEntity = new ToDoEntity
-            {
-                Name = toDoDto.Name,
-                Done = toDoDto.Done
-            };
+            return _context.Set<ToDoEntity>().FirstOrDefault( item => item.Id == id );
+        }
+
+        public void Add( ToDoEntity newEntity )
+        {
             _context.Set<ToDoEntity>().Add( newEntity );
-            _unitOfWork.Commit();
-
-            return newEntity.Id;
-        }
-
-        public void Update( int id, ToDoDto toDoDto )
-        {
-            ToDoEntity entity = _context.Set<ToDoEntity>().FirstOrDefault( item => item.Id == id );
-            entity.Name = toDoDto.Name;
-            entity.Done = toDoDto.Done;
-            _unitOfWork.Commit();
         }
     }
 }

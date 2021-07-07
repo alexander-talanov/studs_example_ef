@@ -1,11 +1,11 @@
-﻿using todo_list.Dto;
+﻿using todo_list.Entities;
 
 namespace todo_list
 {
     public interface IToDoRepository
     {
-        ToDoDto[] GetAll();
-        int Add( ToDoDto toDoDto );
-        void Update( int id, ToDoDto toDoDto );
+        ToDoEntity[] GetAll();
+        ToDoEntity GetById( int id );
+        void Add( ToDoEntity newEntity );
     }
 }
