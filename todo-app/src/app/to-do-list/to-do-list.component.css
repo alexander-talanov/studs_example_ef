@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  padding: 30px;
+}
+
+.addButton {
+  margin-left: 15px;
+}
+
+.active {
+  text-decoration: line-through;
+  color:darkgreen;
+}
