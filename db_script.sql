@@ -1,0 +1,24 @@
+/*
+
+CREATE TABLE dbo.TodoList
+(
+    ToDoId int IDENTITY(1,1) NOT NULL,
+    Name nvarchar(100) NOT NULL,
+    Done bit NOT NULL
+ CONSTRAINT [PK_TodoList] PRIMARY KEY CLUSTERED
+(
+    [ToDoId] DESC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) 
+)
+GO
+
+*/
+
+SELECT * FROM TodoList
+
+/*
+
+INSERT INTO TodoList(Name, Done)
+VALUES ('Create Pull RQ', 0)
+
+*/
